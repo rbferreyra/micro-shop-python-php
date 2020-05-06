@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    container_name: micro-shop-backend
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 5001:80
+    networks:
+      - app-network      
+  frontend:
+    image: php:apache
+    container_name: micro-shop-frontend
+    volumes:
+      - ./frontend:/var/www/html
+    ports:
+      - 5000:80
+    networks:
+      - app-network      
+    depends_on:
+      - backend 
+networks:
+  app-network:
+    driver: bridge          
